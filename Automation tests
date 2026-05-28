@@ -1,0 +1,56 @@
+package org.example;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+public class TC01Login {
+    WebDriver chromedriver = new ChromeDriver();
+
+    @Test
+    public void Test_01_Login() {
+
+        WebDriver chromedriver = new ChromeDriver();
+        chromedriver.get("https://github.com/");
+        chromedriver.manage().window().maximize();
+        System.out.println(chromedriver.getCurrentUrl());
+        chromedriver.close();
+    }
+
+    @Test
+    public void Test_02_SignIn() {
+
+        chromedriver.get("https://github.com/");
+        chromedriver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(chromedriver, Duration.ofSeconds(5));
+        //wait for xpath to be visible
+        WebElement signInLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='HeaderMenu-link HeaderMenu-link--sign-in flex-shrink-0 no-underline d-block d-lg-inline-block border border-lg-0 rounded rounded-lg-0 p-2 p-lg-0']")));
+        signInLink.click();
+
+        WebElement Login_field = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='login_field']")));
+        Login_field.sendKeys("");
+        //chromedriver.findElement(By.className("login_field")).sendKeys("");
+        chromedriver.findElement(By.name("password")).sendKeys("");
+
+        chromedriver.findElement(By.cssSelector("input[value='Sign in']")).click();
+        System.out.println(chromedriver.findElement(By.tagName("h3")).getText());
+
+
+        System.out.println(chromedriver.getCurrentUrl());
+        chromedriver.close();
+
+    }
+
+    @Test
+    public void Test_03_BrowsePage() {
+
+        chromedriver.get("https://github.com/");
+        System.out.println(chromedriver.manage().logs());
+
+    }
+}
